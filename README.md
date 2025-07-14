@@ -1,1 +1,5 @@
-# 94_days_code
+# To-Do App
+## Structure
+backend: Express + MongoDB backend
+React (Vite) frontend
+
