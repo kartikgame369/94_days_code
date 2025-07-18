@@ -1,0 +1,56 @@
+// react app stracture 
+// how to design the components 
+// bootstrap in react npm install bootstrap 
+// pascal casing means frist latter capital its good way to right a react
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import Message from './massage' 
+import ListGroup from './componnets/ListGroup'
+
+function App() {
+  
+
+  return (
+    <div>
+   <ListGroup></ListGroup>
+    </div>
+  )
+}
+
+export default App
+import { Fragment } from "react/jsx-runtime";
+
+function ListGroup(){
+    const items=[
+        'new york',
+        ' san francisco',
+        ' tokyo',
+        ' london',
+        'paris'
+
+    ];
+    
+    return(
+        <>
+            <h1></h1>
+            <ul   className="list-group">
+              {items.map(item=> <li key={item}>{item}</li>)}
+            </ul>
+        </>
+    );
+}
+export default ListGroup
+
+  function Message(){
+    return(
+        <h1>hello world</h1>
+    )
+
+}
+export default Message
+
+// during all this i get knowlate about 
+  //prettir --> for good style and color of the code 
+  // wrap with abrivation this is for waraing all in one like i use fragment 
