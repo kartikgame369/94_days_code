@@ -1,0 +1,190 @@
+lazy loading 
+react.lazy() --> this is for lazy loading 
+
+what ever u writing the components 
+put all that components inside the recat.lazy()
+
+Suspense API
+
+for navigate we used link also but is like its not automated user always need to click 
+on the button 
+
+boldify --> this funcation takes my react components as input and make it bold
+
+routing propdring contex api
+
+propdring --> push down state always
+// how routing work and there syntax
+import React, { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+// import { Dashboard } from './components/dashboard'
+// import { Landing } from './components/landing'
+// import {Navigate, useNavigate} from "react-router-dom"
+// import { BrowserRouter } from 'react-router-dom'
+const Dashboard = React.lazy(() => import('./components/dashboard'));
+const Landing = React.lazy(() => import('./components/landing'));
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+
+
+function App() {
+  // const navigate = useNavigate();
+  return (
+    <div>
+      <BrowserRouter>
+      <Appbar/>
+        <Routes>
+          <Route path="/landing" element={<Landing />} /> 
+          <Route path="/dashboard" element={<Dashboard />} />        
+        </Routes>
+      </BrowserRouter>
+    </div>
+    
+  )
+}
+function Appbar(){
+  const navigate = useNavigate();
+  return <div>
+      <button onClick={()=>{
+        navigate('./Landing')
+      }}>landing page</button>
+      <button onClick={()=>{
+        navigate('./Dashboard')
+      }}>dashboard page</button>
+    </div>
+}
+
+export default App
+// main app.jsx code
+// now the dashboard page code and landing page code 
+
+
+
+
+export  default function Landing(){
+    return <div>
+        landing page
+    </div>
+}
+
+
+
+
+export  default function Dashboard(){
+    return <div>
+        dashboard page 
+    </div>
+}
+
+// propdring conceps 
+
+prop drlling 
+means u drilling down the prop
+
+import React, { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+// import { Dashboard } from './components/dashboard'
+// import { Landing } from './components/landing'
+// import {Navigate, useNavigate} from "react-router-dom"
+// import { BrowserRouter } from 'react-router-dom'
+const Dashboard = React.lazy(() => import('./components/dashboard'));
+const Landing = React.lazy(() => import('./components/landing'));
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+
+
+function App() {
+  // const navigate = useNavigate();
+  const [count , setcount] = useState(0)
+  return (
+    <div>
+      <count count={count}/>
+      <button count={count} setcount={setcount}/>
+    </div>
+    
+  )
+}
+function count({count, setcount}){
+  return <div>
+    {count}
+  </div>
+
+}
+function button(){
+  return 
+  <div>
+    <button onClick={()=>{
+      setcount(count+1)
+
+    }}>increase button </button>
+    
+    <button onClick={()=>{
+      setcount(count-1)
+
+    }}>decrease button</button>
+  </div>
+
+}
+
+export default App
+// contxt api
+// frist make one context api file context.jsx and there u write a code to teliport 
+import { createContext } from "react";
+export const CountContext= createContext(0);
+----------------------------------------------------------
+using of this context api in app.jsx
+import React, { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+// import { Dashboard } from './components/dashboard'
+// import { Landing } from './components/landing'
+// import {Navigate, useNavigate} from "react-router-dom"
+// import { BrowserRouter } from 'react-router-dom'
+const Dashboard = React.lazy(() => import('./components/dashboard'));
+const Landing = React.lazy(() => import('./components/landing'));
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { CountContext } from './components/context';
+
+
+function App() {
+  // const navigate = useNavigate();
+  const [count , setcount] = useState(0)
+  return (
+    <div>
+      <count count={count}/>
+      <CountContext.Provider value={count}><button count={count} setcount={setcount}/></CountContext.Provider>
+    </div>
+    
+  )
+}
+function count({count, setcount}){
+  return <div>
+    <CountRender count={count}/>
+    <Buttons count={count} setcount={setcount}/>
+  </div>
+
+}
+function CountRender(){
+  return <>
+  {count}
+  </>
+}
+function button(){
+  return 
+  <div>
+    <button onClick={()=>{
+      setcount(count+1)
+
+    }}>increase button </button>
+    
+    <button onClick={()=>{
+      setcount(count-1)
+
+    }}>decrease button</button>
+  </div>
+
+}
+export default App
