@@ -1,0 +1,49 @@
+//here is the react wrap components like 
+shortcut using -- wrap with abbreviation 
+using this wrap all componets in one 
+hooks in react 
+1]useEffect, 
+2]useMemo, 
+3]useCallback, 
+4]useRef, 
+5]useReducer
+ 6]useContext
+ 7]useLayoutEffect
+These functions that start with use are called hooks
+ Hooks in React are functions that allow you to "hook 
+into" React state and lifecycle features from function 
+components.
+in the react the express server code is not fatch directly 
+so there hook is used that is useeffect 
+
+useeffect(()=>{
+fatch("https://localhost3001");
+.then(async (res)=>{
+const json = await res.json();
+set todos (json.todos);
+});
+},[]);
+so here one array is there that is depancency array for storing the todos 
+so the hook is use callback 
+ useCallback is used to memorize a callback function. 
+This is useful when you have a function that you pass 
+down to child components and you don't want to re
+create the function on every render, which could lead to 
+unnecessary re-renders of the child components.
+the next hook is usememo
+useMemo is used to memorize a value. This is useful when 
+you have a computationally expensive calculation that you 
+don't want to re-run on every render unless specific 
+dependencies change
+
+useref hoot 
+ useRef is a hook in React that is used to persist values across 
+renders without causing a re-render of the component. It's 
+often used for accessing DOM elements directly, storing a 
+mutable reference to a value, or keeping track of a previous 
+state/value.
+
+after this we also make our custom hook 
+like this use the word use keyword 
+the only condition is start with Use 
+now the things in _day_6
