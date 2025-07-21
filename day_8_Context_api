@@ -1,0 +1,81 @@
+// Context Api 
+A cleaner way to store the state of your app 
+Until now, the cleanest thing you can do is use the Context API.  
+It lets you teleport state 
+But there are better solutions that get rid of the problems that Context Api has  
+(unnecessary re-renders
+[ use recoil value and use set recoil value ] ulternate of use state like const [ count , setcount ] = use state(0)
+so here is 2 functions and one setcount for call and count is for updations ]
+main--things 
+-->const count = useRecoilValue(CountAtom);
+---> const count = useRecoilValue(CountAtom);
+  --> during this the funcation count wrap in the [ <RecoilRoot] this is imp 
+
+App.jsx
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import { useContext } from 'react'
+import {CountContext} from "./Context"
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { CountAtom } from './store/count'
+
+function App() {
+  const [count , setCount] = useState(0);
+
+  return (
+    <>
+      <RecoilRoot>
+        <Count/>
+        </RecoilRoot>
+    </>
+  )
+}
+function Count(){
+  return <div>
+    <CountRender/>
+    <Button/>
+  </div>
+}
+
+function CountRender(){
+  const count = useRecoilValue(CountAtom);
+  return <div>
+    <b>
+      {count}
+    </b>
+    <EvenCountRender/>
+  </div>
+}
+function EvenCountRender(){
+   const count = useRecoilValue(CountAtom);
+  if(count%2==0){
+    return <div>
+      it is even
+    </div>
+  }
+
+}
+ function Button(){
+  const count = useRecoilState(CountAtom);
+  // const [count , setCount] = useRecoilState()
+  return <div>
+    <button onClick={()=>{
+      setCount(count + 1)
+    }}>increase</button>
+    <button onClick={()=>{
+      setCount(count - 1)
+    }}>Decreses</button>
+  </div>
+ }
+
+export default App
+
+Count.jsx
+import {atom } from "recoil"
+export const CountAtom = atom({
+    key:"CountAtom",
+    default: 0,
+});
+
