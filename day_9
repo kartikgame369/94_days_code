@@ -1,0 +1,80 @@
+ npm install recoil 
+this for depencancey of code 
+hooks react provied 
+--> userecoilstate
+---> userecoilvalue
+--> useset recoilstate
+------in advanced atom family---------
+--> userecoilsate lodable ------> userecoilvalue lodable
+[ when we using all this hooks in react note one thing that funcation app() --> this will be wrap inside the <RecoilRoot> < funcation name/> </RecoilRoot> ]
+userecoilstate
+---> userecoilvalue
+--> useset recoilstate
+app.jsx code
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import { RecoilRoot, useRecoilValue } from 'recoil'
+import { JobAtom, messagingAtom, networkAtom, notificationAtom } from './assets/atoms'
+import { atom } from 'recoil'
+// import Atom from './assets/atoms'
+
+function App() {
+  return <RecoilRoot>
+    <MainApp/>
+  </RecoilRoot>
+}
+
+function MainApp(){
+  const networknotificationcount= useRecoilValue(networkAtom);
+  const JobAtomCount = useRecoilValue(JobAtom);
+  const notificationAtomCount=useRecoilValue(notificationAtom);
+  const MessagingAtom= useRecoilValue(messagingAtom);
+
+
+  return (
+    <>
+      <button>Home</button>
+      <button>My Network ({networknotificationcount>=100 ? "99": networknotificationcount})</button>
+      <button>Jobs ({JobAtomCount})</button>
+      <button>Messaging({messagingAtom})</button>
+      <button>Notification({notificationAtomCount})</button>
+      
+    </>
+  )
+}
+
+function ButtonUpdater(){
+  const MessagingAtom= useRecoilValue(messagingAtom);
+
+  return <button onClick={()=>{
+        setMessagingCount=(c=>c+1);
+      }}>Me</button>
+}
+
+export default App
+atom.js code 
+import { atom } from 'recoil';
+
+
+export const networkAtom = atom({
+     key:"networkAtom",
+     default:104,
+})
+
+export const JobAtom = atom({
+     key:"JobAtom",
+     default:0,
+})
+
+export const notificationAtom = atom({
+     key:"notificationAtom",
+     default:0,
+})
+
+export const messagingAtom = atom({
+     key:"messagingAtom",
+     default:0,
+})
+
