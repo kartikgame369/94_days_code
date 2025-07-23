@@ -78,3 +78,108 @@ export const messagingAtom = atom({
      default:0,
 })
 
+now here selector 
+
+export const totalnotificationselectror = selector({
+     key: "totalNotificationSelector",
+     get :({get})=>{
+          const networAtomCount = get(networkAtom);
+          const JobAtomCount = get(JobAtom);
+          const notificationAtomCount= get(notificationAtom);
+          const messagingAtomCount = get(messagingAtom);
+          return networAtomCount+JobAtomCount+notificationAtomCount+messagingAtomCount
+
+     }
+})
+// so use this in the app.jsx buttom me buttom \/
+// now asyancronous data query 
+now the axios is used npm install axios 
+useeffect({}=>{
+axios.get(""){
+.then(res.{
+networkcount(res)
+})
+)
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import { RecoilRoot, useRecoilValue } from 'recoil'
+import { JobAtom, messagingAtom, networkAtom, notificationAtom, totalnotificationselectror } from './assets/atoms'
+import { atom } from 'recoil'
+// import Atom from './assets/atoms'
+
+function App() {
+  return <RecoilRoot>
+    <MainApp/>
+  </RecoilRoot>
+}
+
+function MainApp(){
+  const networknotificationcount= useRecoilValue(networkAtom);
+  const JobAtomCount = useRecoilValue(JobAtom);
+  const notificationAtomCount=useRecoilValue(notificationAtom);
+  const MessagingAtom= useRecoilValue(messagingAtom);
+  // const total_notification_of= networknotificationcount+JobAtomCount+notificationAtomCount+messagingAtom
+  const totalnotificationCount = useRecoilValue(totalnotificationselectror);
+
+
+  return (
+    <>
+      <button>Home</button>
+      <button>My Network ({networknotificationcount>=100 ? "99": networknotificationcount})</button>
+      <button>Jobs ({JobAtomCount})</button>
+      <button>Messaging({messagingAtom})</button>
+      <button>Notification({notificationAtomCount})</button>
+      {/* <button>me ({total_notification_of})</button> */}
+      <button>me ({totalnotificationCount})</button>
+
+    </>
+  )
+}
+
+// function ButtonUpdater(){
+//   const MessagingAtom= useRecoilValue(messagingAtom);
+
+//   return <button onClick={()=>{
+//         setMessagingCount=(c=>c+1);
+//       }}>Me</button>
+// }
+
+export default App
+import { atom, selector } from 'recoil';
+
+
+export const networkAtom = atom({
+     key:"networkAtom",
+     default:104,
+})
+
+export const JobAtom = atom({
+     key:"JobAtom",
+     default:0,
+})
+
+export const notificationAtom = atom({
+     key:"notificationAtom",
+     default:0,
+})
+
+export const messagingAtom = atom({
+     key:"messagingAtom",
+     default:0,
+})
+
+export const totalnotificationselectror = selector({
+     key: "totalNotificationSelector",
+     get :({get})=>{
+          const networAtomCount = get(networkAtom);
+          const JobAtomCount = get(JobAtom);
+          const notificationAtomCount= get(notificationAtom);
+          const messagingAtomCount = get(messagingAtom);
+          return networAtomCount+JobAtomCount+notificationAtomCount+messagingAtomCount
+
+     }
+});
+
+
