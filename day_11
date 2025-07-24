@@ -1,0 +1,30 @@
+next.js
+waterfalling 
+not SEO otimised 
+Dosent work in places  js cant run { email}
+solution -- server side rendering
+website --> heting the server --> cdb - get back index.html-- ds large data --> 
+Waterfalling --> react js websites [ html is blank ]
+SEO search engin optimization 
+serach enginer not running js only html 
+email client--> react.js not work 
+serverside redernsing --  u write code recact but your server frist render is white after 1sec 
+without backend 
+DOM react -- convert html 
+serverside rendersing -- react code app.jsx -- html css js --> server side html file and normal html css js file]
+html css js -- react -- next
+what is SSR?
+the process of initial render in the server 
+all following renderring beacuse the state is updating 
+there is a backed servr where the server side renderring happen
+html css js put it in cdn --> cdn puts on server 
+user ask to server ...next js take the data from mongo db and get the server data from there and give to user
+[ facts about next js [ js - local storgae not used ]
+next js [ backedn and fronted both can handel no need to write express code ]
+so here is one project [ next.js]
+https://github.com/100xDevs-hkirat/week-10.2.git [ this is the repo ]
+git init 
+git clone https://github.com/100xDevs-hkirat/week-10.2.git 
+npm install 
+npm install next react react-dom
+npm run dev 
