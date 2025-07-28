@@ -1,0 +1,218 @@
+day 15 nextjs middleware routers new files logout file 
+nodemailer and token json webtoken all things 
+deploy on 16 full project on my github
+
+"use client"
+import axios from "axios"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
+import React, {useState} from "react"
+export default function profilepage(){
+    const router = useRouter();
+     const Logout = () =>{
+        try{
+            await axios.get('/Api/users/logout')
+            toast.success('Logout successfully')
+            router.push('./login')
+
+        }catch(error:any){
+            console.log(error.message);
+            console.log(error.message)
+        }
+     }
+
+     const getUserDetails = async ()=>{
+        const res = await axios.get('./Api/users/me')
+        console.log(res.data);
+        setData(res.data.data)
+     }
+    return (
+        <div className="flex flex-col items-center justify-center *:min-h-screen
+        py-2">
+            <h1>profile</h1>
+            <hr />
+            <p>profile page</p>
+            <h2 className="p-3 rounded bg-green-300 ">{data===  "nothing"?: "Nothing": <link href="{'./profile/${data}}">{data}</link>}</h2>
+            <hr />
+            <button onClick={Logout} className="bg-blue-500 mt-4 hover:bg-blue-700 text-white">Logout</button>
+            <button onClick={getUserDetails} className="bg-blue-500 mt-4 hover:bg-blue-700 text-white">Logout</button>
+
+
+        </div>
+    )
+}
+import { verify } from "crypto";
+import nodemailer from 'nodemailer';
+import User from "../models/user_model";
+import bcrypt from "bcryptjs";
+import { Html } from "next/document";
+
+export const sendEmail = async ({ email, emailType, userID }) => {
+  try {
+    const hashedToken = await bcrypt.hash(userID.toString(), 10);
+
+    if (emailType === "VERIFY") {
+      await User.findByIdAndUpdate(userID, {
+        verifytoken: hashedToken,
+        verifytokenExpiry: Date.now() + 360000,
+      });
+    } else if (emailType === "RESET") {
+      await User.findByIdAndUpdate(userID, {
+        resetToken: hashedToken,
+        resetTokenExpiry: Date.now() + 360000,
+      });
+    }
+
+    const transport = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
+      }
+    });
+
+    // Example mail options (optional, you can modify or add as per your logic)
+    await transport.sendMail({
+      from: process.env.MAIL_USER,
+      to: email,
+      subject: emailType === "VERIFY" ? "Verify your email" : "Reset your password",
+      html: `<p>Check your email to ${emailType === "VERIFY" ? "verify your account" : "reset your password"}.</p>`
+    });
+
+    const mailOptions={
+        from: 'kartikgame22code@gmail.com',
+        to:email,
+        subject: emailType === "VERIFEY" ? "verify your email":
+        "Reset your password",
+        html:<p> click ,a href="${process.env.domain}/verifyemail?token=${hashedToken}">here</a> to $
+        {emailType==="VERIFY"? "verify your email": "reset your password"}</p>
+    }
+    await  mailresponse = await transport.sendMail
+    (mailOptions);
+    return mailresponse;
+
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+import { connect } from "@/app/DBconfig/dbconfic";
+import { NextRequest, NextResponse } from "next/server";
+import User from "@/app/models/user_model";
+import { sendEmail } from "@/app/helpers/mailer";
+
+connect();
+
+export async function POST(request: NextRequest) {
+  try {
+    const reqBody = await request.json();
+    const { token } = reqBody;
+    console.log(token);
+
+    const user = await User.findOne({
+      verifyToken: token,
+      verifyTokenExpiry: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: "Invalid token" }, { status: 400 });
+    }
+
+    console.log(user);
+    user.isVerified = true;
+    user.verifyToken = undefined;
+    user.verifyTokenExpiry = undefined;
+    await user.save();
+
+    await sendEmail({email , emailType:"VERIFY",
+        userID: saveUser._id })
+
+    return NextResponse.json({
+      message: "Email verified successfully",
+      success: true
+    });
+
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+export default function UserProfile({params}: any){
+    return (
+        <div className="flex flex-col items-center justify-center *:min-h-screen
+        py-2">
+            <h1>profile</h1>
+            <hr />
+            <p className="text-4xl">profile page </p>
+            <span className="p-2 rounded bg-amber-500 
+            text-black">{params.id}</span>
+            
+
+        </div>
+    )
+}
+import { NextResponse, NextRequest } from 'next/server'
+
+// This function can be marked `async` if using `await` inside
+export function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname
+  const isPublicPath = path === '/login' || path === '/singup'
+
+  const token = request.cookies.get('token')?.value || ''
+
+  if (isPublicPath && token) {
+    return NextResponse.redirect(new URL('/', request.nextUrl))
+  }
+
+  if (!isPublicPath && !token) {
+    return NextResponse.redirect(new URL('/login', request.nextUrl))
+  }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: [
+    '/',
+    '/profile',
+    '/login',
+    '/singup'
+  ]
+}
+
+import { getdataFromToken } from "@/app/helpers/getdataFromToken";
+import { NextRequest , NextResponse } from "next/server";
+import User from "@/app/models/user_model";
+import {connect} from "@/app/DBconfig/dbconfic"
+
+connect();
+export async function GET(request:NextRequest) {
+    try{
+        const userID = await getdataFromToken(request);
+        const user = await User.findOne({_id:userID}).select("-password");
+        return NextResponse.json({
+            message:"User found",
+            data:user
+        });
+
+    }catch(error: any){
+        return NextResponse.json({error.message},
+            {status:400}
+        )
+    }
+    
+}
+import { NextRequest } from "next/server";
+import jwt from "jsonwebtoken"
+import { request } from "http";
+
+export const getdataFromToken = (request:NextRequest)=>{
+    try{
+        const token= request.cookies.get("token")?. value || '';
+        const decodedtoken:any = jwt.verify(token,process.env.TOKEN_SECRET!);
+        return decodedtoken.id;
+
+    }catch(error:any){
+        throw new error(error.message);
+    }
+}
