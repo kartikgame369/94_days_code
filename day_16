@@ -1,0 +1,23 @@
+so the project is uploaded 
+
+app --> login page done 
+app --> singup page done
+app --- profile page done id done
+
+app--> dbconfig - done
+app-->helpers - getdata - mailer - done
+app--> models - usermodel done 
+app--> middleware done 
+app --> page done
+app--> layout -- done 
+app -- verifyemail done
+
+Api -> login done
+Api -> logout done
+Api -> signup done
+
+Api - users - me - verifymail 
+
+[ my vs-code paths ] 
+
+ user_authentication --------> repo_name 
