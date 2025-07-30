@@ -1,0 +1,205 @@
+youtube clone 
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import {VideoCard} from "@/compontes/VideoCard"
+import { VideoGrid } from "@/compontes/VedioGrid";
+import { AppBAr } from "@/compontes/AppBar";
+import { SearchBar_1 } from "@/compontes/SearchBar";
+
+const inter = Inter({ subsets: ['latin'] });
+
+export default function Home(){
+    return (
+        <div>
+             <VideoGrid/>
+             <AppBAr/>
+             {/* <SearchBar_1/> */}
+        </div>
+    )
+}
+
+
+import { SearchBar_1 } from "./SearchBar"
+
+
+export const AppBAr=()=>{
+    return <div className="flex justify-between">
+         <div className=" text-md inline-flex items-center pb-2">
+              Youtube 
+         </div>
+         <div>
+             <SearchBar_1/>
+         </div>
+         <div>
+                 Signup
+         </div>
+    </div>
+}
+
+
+
+export const SearchBar_1 = () => {
+    return (
+        <div>
+            <div className="w-96 flex text-gray-900 border border-gray-500 rounded-3xl p-1 pl-3 pr-2">
+                <input
+                    id="default-search"
+                    className="w-full bg-slate-950 text-white border-none outline-none"
+                    placeholder="Search"
+                    required
+                />
+                <button className="bg-slate-950 text-gray-400 font-bold py-2 px-4 rounded inline-flex items-center">
+                    <svg
+                        className="w-4 h-4"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                    >
+                        <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M19 19l-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    );
+};
+
+import { VideoCard } from "./VideoCard"
+
+
+const VIDEOS = [{
+
+              title:"how to learn next js in 7days | 94 days plan |code with me  ",
+              image:"photo.jpg",
+              thumbImage:"thumb.jpg",
+              author:"kartik game",
+              views:"900k",
+              timestamps:"10 days ago"
+              
+},
+{
+
+              title:"how to learn next js in 7days | 94 days plan |code with me  ",
+              image:"photo.jpg",
+              thumbImage:"thumb.jpg",
+              author:"kartik game",
+              views:"900k",
+              timestamps:"10 days ago"
+              
+},
+{
+
+              title:"how to learn next js in 7days | 94 days plan |code with me  ",
+              image:"photo.jpg",
+              thumbImage:"thumb.jpg",
+              author:"kartik game",
+              views:"900k",
+              timestamps:"10 days ago"
+              
+},
+{
+
+              title:"how to learn next js in 7days | 94 days plan |code with me  ",
+              image:"photo.jpg",
+              thumbImage:"thumb.jpg",
+              author:"kartik game",
+              views:"900k",
+              timestamps:"10 days ago"
+              
+},
+{
+
+              title:"how to learn next js in 7days | 94 days plan |code with me  ",
+              image:"photo.jpg",
+              thumbImage:"thumb.jpg",
+              author:"kartik game",
+              views:"900k",
+              timestamps:"10 days ago"
+              
+},
+{
+
+              title:"how to learn next js in 7days | 94 days plan |code with me  ",
+              image:"photo.jpg",
+              thumbImage:"thumb.jpg",
+              author:"kartik game",
+              views:"900k",
+              timestamps:"10 days ago"
+              
+},
+{
+
+              title:"how to learn next js in 7days | 94 days plan |code with me  ",
+              image:"photo.jpg",
+              thumbImage:"thumb.jpg",
+              author:"kartik game",
+              views:"900k",
+              timestamps:"10 days ago"
+              
+},
+{
+
+              title:"how to learn next js in 7days | 94 days plan |code with me  ",
+              image:"photo.jpg",
+              thumbImage:"thumb.jpg",
+              author:"kartik game",
+              views:"900k",
+              timestamps:"10 days ago"
+              
+},
+{
+
+              title:"how to learn next js in 7days | 94 days plan |code with me  ",
+              image:"photo.jpg",
+              thumbImage:"thumb.jpg",
+              author:"kartik game",
+              views:"900k",
+              timestamps:"10 days ago"
+              
+}]
+
+export const VideoGrid = () => {
+    return <div className="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4">
+        {VIDEOS.map(Vedio => (
+            <div>
+                <VideoCard
+                    title={Vedio.title}
+                    image={Vedio.image}
+                    thumbImage={Vedio.thumbImage}
+                    author={Vedio.author}
+                    views={Vedio.views}
+                    timestamps={Vedio.timestamps}
+                />
+            </div>
+        ))}
+    </div>
+}
+import { renderToString } from "react-dom/server";
+
+export function VideoCard(props:any) {
+    return (
+        <div className="">
+            <img src={props.image} alt="" />
+            <div className="grid grid-cols-12 ">
+                <div className="col-span-2">
+                    <img className={"rounded-full w-12 h-12"} src={props.thumbImage} alt="" />
+                </div>
+                <div className="col-span-11 pl-2">
+                {props.title}
+                </div>
+                <div className="col-span-11 pl-5 text-gray-400 text-base">
+                {props.author}
+                </div>
+                <div className="col-span-11 pl-5 text-gray-400 text-base">
+                {props.views} |  {props.timestamps}
+                </div>
+            </div>
+        </div>
+    );
+}
