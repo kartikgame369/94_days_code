@@ -1,0 +1,25 @@
+creating the sign in page 
+where user make payment 
+then in the postment seen the tracnsaction 
+the tractction data is saved in the mongo db 
+
+
+trassection error 
+using 
+  asycn funcation payment (){
+try{
+}catch{
+status( err){
+} 
+
+using this i can handel the error 
+  
+mongo db client sessions [ this is in the documention ] 
+1 threat access at a session 
+
+decimals are not stored in data base beacuse of the precision error 
+comes 
+only supports the interger 
+8.7 8.8 beyond three decimal they dont support 
+
+
